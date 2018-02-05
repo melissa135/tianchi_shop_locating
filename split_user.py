@@ -1,3 +1,6 @@
+'''
+Split the lines in ccf_first_round_shop_info.csv into the user_info.csv in corresponding mall directory.
+'''
 import os
 import csv
 import pandas as pd
