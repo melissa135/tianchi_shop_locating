@@ -1,3 +1,7 @@
+'''
+intergrate the predict results in every mall directory into a single file, according to the initial order in evaluation_public.csv.
+record the search position in each result.csv to improve the search efficiency.
+'''
 import os
 import csv
 import time
