@@ -1,3 +1,6 @@
+'''
+Divide each user_info.csv into several subset, sorted by timestamp, used for cross-validation.
+'''
 import os
 import csv
 import random
@@ -6,7 +9,7 @@ import pandas as pd
 from pandas.io.parsers import read_csv
 
   
-def user_scatter(path):
+def divide(path):
 
     df_user = read_csv(path + '/user_info.csv')
     length = len(df_user)
@@ -48,11 +51,9 @@ if __name__ == '__main__':
     dir_count = 0
 
     for dirpath,_,_ in os.walk(my_path):
-        #if dirpath != 'D:/tianchi_multiclass/data\m_615' :
-        #    continue
-        if dirpath == 'D:/tianchi_multiclass/data' or len(dirpath) >= 40:
+        if dirpath == 'D:/tianchi_multiclass/data': # only walk the sub-directory
             continue
         
-        user_scatter(dirpath)
+        divide(dirpath)
         
         print dirpath
