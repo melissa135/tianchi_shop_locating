@@ -1,3 +1,7 @@
+'''
+Split shops from ccf_first_round_shop_info.csv into shop_info.csv in each mall directory.
+Meanwhile, mkdir if the mall_id is met firstly.
+'''
 import os
 import csv
 import pandas as pd
