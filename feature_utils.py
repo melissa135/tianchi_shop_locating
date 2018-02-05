@@ -1,7 +1,7 @@
 from pandas.io.parsers import read_csv
 from datetime import datetime,date
 
-
+# if the frequency of a wifi is more than a threshold/threshold_minor, add it to the wifiset/wifiset_minor
 def wifi_feature_set(fname):
 
     global threshold1,threshold2,mnr_param,merge
@@ -64,7 +64,7 @@ def wifi_set2dict(wifi_set):
 
     return wifi_dict
 
-
+# for wifis in the minor set, merge a fixed number of wifis into one feature, for reducing the feature dimension
 def wifi_set2dict_mnr(wifi_set):
     
     index = 0
@@ -75,7 +75,7 @@ def wifi_set2dict_mnr(wifi_set):
 
     return wifi_dict
 
-
+# pre-process for the wifi record, convert them to wifi_vector
 def get_wifi_feature(wifi_infos,wifi_dict1,wifi_dict2,wifi_dict1_mnr,wifi_dict2_mnr):
     
     wifis = wifi_infos.split(';')
@@ -115,7 +115,7 @@ def get_wifi_feature(wifi_infos,wifi_dict1,wifi_dict2,wifi_dict1_mnr,wifi_dict2_
     wifi_vector.extend(wifi_vector2_mnr)
     return wifi_vector
 
-
+# 0-6:which day of the week, 7:the minutes, 8:whether weekend
 def get_time_feature(time_stamp):
     
     time_stamp = time_stamp.replace('  ',' ')
@@ -134,6 +134,7 @@ def get_time_feature(time_stamp):
     return vector
 
 
+# the user's history record of all the shops
 def get_user_feature(fname):
     user_df = read_csv(fname)
     
@@ -180,6 +181,7 @@ def count_shop(df):
     return count
 
 
+# take the most frequent pairs of wifi as the feature
 def get_wifi_pairs(file_name):
     df = read_csv(file_name)
     pairs = set()
@@ -187,7 +189,7 @@ def get_wifi_pairs(file_name):
         pairs.add(df['wifi_pair'][i])
     return pairs
 
-
+# use the difference of pair of wifis' strength as the pairs_feature, take the mini-strength - 10 as the default wifi strength.
 def pairs_feature(wifi_infos,wifi_pairs):
     wifis = wifi_infos.split(';')
 
