@@ -1,3 +1,6 @@
+'''
+Split the lines in evaluation_public.csv into the test_info.csv in corresponding mall directory.
+'''
 import os
 import csv
 import pandas as pd
