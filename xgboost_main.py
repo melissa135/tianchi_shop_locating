@@ -7,7 +7,8 @@ import xgboost as xgb
 from feature_utils import * 
 from pandas.io.parsers import read_csv
 
-  
+# the dataset has been divided into `num` subsets, in training, take one of the subsets as the testset and take rest of them as trainset
+# thus get `num` predictors and their evaluation score, saved in xgb_list and score_list
 def train_xgb(path):
 
     global wifi_dict1,wifi_dict2,wifi_dict1_mnr,wifi_dict2_mnr,shop_dict,shop_dict_rv
@@ -142,7 +143,7 @@ def train_xgb(path):
 
     return xgb_list,score_list
 
-
+# predict the unknown samples with the `num` predictors, use their vote result as the final label
 def predict_xgb(path,xgb_list):
 
     df_test = read_csv(path + '/test_info.csv')
@@ -232,12 +233,10 @@ if __name__ == '__main__':
     for dirpath,_,_ in os.walk(my_path):
         if dirpath == 'D:/tianchi_multiclass/data':
             continue
-        if len(dirpath) > 40 :
+        if len(dirpath) > 40 : # the my_path itself
             continue
 
         dir_count = dir_count + 1
-        if dir_count < 78 :
-            continue
 
         print dirpath
         
@@ -246,6 +245,7 @@ if __name__ == '__main__':
         xgb_list_disk = [ '' for i in range(0,num) ]
         score_list_disk = [ 1.0 for i in range(0,num) ]
 
+        # the program is designed to execute repeatedly, and replace the old predictor with new one if the its evalutation score is better than old one
         for root,_,files in os.walk(dirpath):
             for f in files :
                 if os.path.splitext(f)[1] == '.model':
@@ -266,7 +266,7 @@ if __name__ == '__main__':
                     os.remove(xgb_list_disk[i])
                 except Exception as e :
                     print e
-                xgb_list[i].save_model(dirpath + '/xgb_%d_%f.model'%(i,score_list[i]))
+                xgb_list[i].save_model(dirpath + '/xgb_%d_%f.model'%(i,score_list[i])) # the filename contains the cross-validation number and its score
 
         xgb_list_best = []
         for root,_,files in os.walk(dirpath):
