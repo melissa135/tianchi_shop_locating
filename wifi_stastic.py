@@ -1,3 +1,7 @@
+'''
+count the appearance and connection of each wifi in every mall, saved in wifi_info.csv
+'''
+
 import os
 import csv
 import pandas as pd
